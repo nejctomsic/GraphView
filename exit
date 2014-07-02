@@ -1,0 +1,215 @@
+[1mdiff --git a/GraphView.iml b/GraphView.iml[m
+[1mindex 205e7b3..fc889cd 100644[m
+[1m--- a/GraphView.iml[m
+[1m+++ b/GraphView.iml[m
+[36m@@ -1,9 +1,9 @@[m
+ <?xml version="1.0" encoding="UTF-8"?>[m
+[31m-<module external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="GraphView-Demos" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">[m
+[32m+[m[32m<module external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="GMS.libraries" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">[m
+   <component name="FacetManager">[m
+     <facet type="android-gradle" name="Android-Gradle">[m
+       <configuration>[m
+[31m-        <option name="GRADLE_PROJECT_PATH" value=":GraphView" />[m
+[32m+[m[32m        <option name="GRADLE_PROJECT_PATH" value=":libraries:GraphView" />[m
+       </configuration>[m
+     </facet>[m
+     <facet type="android" name="Android">[m
+[36m@@ -66,5 +66,198 @@[m
+     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />[m
+     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />[m
+   </component>[m
+[32m+[m[32m  <component name="org.twodividedbyzero.idea.findbugs">[m
+[32m+[m[32m    <option name="_basePreferences">[m
+[32m+[m[32m      <map>[m
+[32m+[m[32m        <entry key="property.analysisEffortLevel" value="default" />[m
+[32m+[m[32m        <entry key="property.analyzeAfterCompile" value="false" />[m
+[32m+[m[32m        <entry key="property.annotationGutterIconEnabled" value="true" />[m
+[32m+[m[32m        <entry key="property.annotationSuppressWarningsClass" value="edu.umd.cs.findbugs.annotations.SuppressFBWarnings" />[m
+[32m+[m[32m        <entry key="property.annotationTextRangeMarkupEnabled" value="true" />[m
+[32m+[m[32m        <entry key="property.exportAsHtml" value="true" />[m
+[32m+[m[32m        <entry key="property.exportAsXml" value="true" />[m
+[32m+[m[32m        <entry key="property.exportBaseDir" value="" />[m
+[32m+[m[32m        <entry key="property.exportCreateArchiveDir" value="false" />[m
+[32m+[m[32m        <entry key="property.exportOpenBrowser" value="true" />[m
+[32m+[m[32m        <entry key="property.minPriorityToReport" value="Medium" />[m
+[32m+[m[32m        <entry key="property.runAnalysisInBackground" value="false" />[m
+[32m+[m[32m        <entry key="property.showHiddenDetectors" value="false" />[m
+[32m+[m[32m        <entry key="property.toolWindowToFront" value="true" />[m
+[32m+[m[32m      </map>[m
+[32m+[m[32m    </option>[m
+[32m+[m[32m    <option name="_detectors">[m
+[32m+[m[32m      <map>[m
+[32m+[m[32m        <entry key="AppendingToAnObjectOutputStream" value="true" />[m
+[32m+[m[32m        <entry key="AtomicityProblem" value="true" />[m
+[32m+[m[32m        <entry key="BadAppletConstructor" value="false" />[m
+[32m+[m[32m        <entry key="BadResultSetAccess" value="true" />[m
+[32m+[m[32m        <entry key="BadSyntaxForRegularExpression" value="true" />[m
+[32m+[m[32m        <entry key="BadUseOfReturnValue" value="true" />[m
+[32m+[m[32m        <entry key="BadlyOverriddenAdapter" value="true" />[m
+[32m+[m[32m        <entry key="BooleanReturnNull" value="true" />[m
+[32m+[m[32m        <entry key="BuildInterproceduralCallGraph" value="false" />[m
+[32m+[m[32m        <entry key="BuildObligationPolicyDatabase" value="true" />[m
+[32m+[m[32m        <entry key="CallToUnsupportedMethod" value="false" />[m
+[32m+[m[32m        <entry key="CalledMethods" value="true" />[m
+[32m+[m[32m        <entry key="CheckCalls" value="false" />[m
+[32m+[m[32m        <entry key="CheckExpectedWarnings" value="false" />[m
+[32m+[m[32m        <entry key="CheckImmutableAnnotation" value="true" />[m
+[32m+[m[32m        <entry key="CheckRelaxingNullnessAnnotation" value="true" />[m
+[32m+[m[32m        <entry key="CheckTypeQualifiers" value="true" />[m
+[32m+[m[32m        <entry key="CloneIdiom" value="true" />[m
+[32m+[m[32m        <entry key="ComparatorIdiom" value="true" />[m
+[32m+[m[32m        <entry key="ConfusedInheritance" value="true" />[m
+[32m+[m[32m        <entry key="ConfusionBetweenInheritedAndOuterMethod" value="true" />[m
+[32m+[m[32m        <entry key="CrossSiteScripting" value="true" />[m
+[32m+[m[32m        <entry key="DefaultEncodingDetector" value="true" />[m
+[32m+[m[32m        <entry key="DoInsideDoPrivileged" value="true" />[m
+[32m+[m[32m        <entry key="DontCatchIllegalMonitorStateException" value="true" />[m
+[32m+[m[32m        <entry key="DontIgnoreResultOfPutIfAbsent" value="true" />[m
+[32m+[m[32m        <entry key="DontUseEnum" value="true" />[m
+[32m+[m[32m        <entry key="DroppedException" value="true" />[m
+[32m+[m[32m        <entry key="DumbMethodInvocations" value="true" />[m
+[32m+[m[32m        <entry key="DumbMethods" value="true" />[m
+[32m+[m[32m        <entry key="DuplicateBranches" value="true" />[m
+[32m+[m[32m        <entry key="EmptyZipFileEntry" value="false" />[m
+[32m+[m[32m        <entry key="EqualsOperandShouldHaveClassCompatibleWithThis" value="true" />[m
+[32m+[m[32m        <entry key="ExplicitSerialization" value="true" />[m
+[32m+[m[32m        <entry key="FieldItemSummary" value="true" />[m
+[32m+[m[32m        <entry key="FinalizerNullsFields" value="true" />[m
+[32m+[m[32m        <entry key="FindBadCast2" value="true" />[m
+[32m+[m[32m        <entry key="FindBadForLoop" value="true" />[m
+[32m+[m[32m        <entry key="FindBugsSummaryStats" value="true" />[m
+[32m+[m[32m        <entry key="FindCircularDependencies" value="false" />[m
+[32m+[m[32m        <entry key="FindDeadLocalStores" value="true" />[m
+[32m+[m[32m        <entry key="FindDoubleCheck" value="true" />[m
+[32m+[m[32m        <entry key="FindEmptySynchronizedBlock" value="true" />[m
+[32m+[m[32m        <entry key="FindFieldSelfAssignment" value="true" />[m
+[32m+[m[32m        <entry key="FindFinalizeInvocations" value="true" />[m
+[32m+[m[32m        <entry key="FindFloatEquality" value="true" />[m
+[32m+[m[32m        <entry key="FindFloatMath" value="false" />[m
+[32m+[m[32m        <entry key="FindHEmismatch" value="true" />[m
+[32m+[m[32m        <entry key="FindInconsistentSync2" value="true" />[m
+[32m+[m[32m        <entry key="FindJSR166LockMonitorenter" value="true" />[m
+[32m+[m[32m        <entry key="FindLocalSelfAssignment2" value="true" />[m
+[32m+[m[32m        <entry key="FindMaskedFields" value="true" />[m
+[32m+[m[32m        <entry key="FindMismatchedWaitOrNotify" value="true" />[m
+[32m+[m[32m        <entry key="FindNakedNotify" value="true" />[m
+[32m+[m[32m        <entry key="FindNonSerializableStoreIntoSession" value="false" />[m
+[32m+[m[32m        <entry key="FindNonSerializableValuePassedToWriteObject" value="false" />[m
+[32m+[m[32m        <entry key="FindNonShortCircuit" value="true" />[m
+[32m+[m[32m        <entry key="FindNullDeref" value="true" />[m
+[32m+[m[32m        <entry key="FindNullDerefsInvolvingNonShortCircuitEvaluation" value="true" />[m
+[32m+[m[32m        <entry key="FindOpenStream" value="true" />[m
+[32m+[m[32m        <entry key="FindPuzzlers" value="true" />[m
+[32m+[m[32m        <entry key="FindRefComparison" value="true" />[m
+[32m+[m[32m        <entry key="FindReturnRef" value="true" />[m
+[32m+[m[32m        <entry key="FindRunInvocations" value="true" />[m
+[32m+[m[32m        <entry key="FindSelfComparison" value="true" />[m
+[32m+[m[32m        <entry key="FindSelfComparison2" value="true" />[m
+[32m+[m[32m        <entry key="FindSleepWithLockHeld" value="true" />[m
+[32m+[m[32m        <entry key="FindSpinLoop" value="true" />[m
+[32m+[m[32m        <entry key="FindSqlInjection" value="true" />[m
+[32m+[m[32m        <entry key="FindTwoLockWait" value="true" />[m
+[32m+[m[32m        <entry key="FindUncalledPrivateMethods" value="true" />[m
+[32m+[m[32m        <entry key="FindUnconditionalWait" value="true" />[m
+[32m+[m[32m        <entry key="FindUninitializedGet" value="true" />[m
+[32m+[m[32m        <entry key="FindUnrelatedTypesInGenericContainer" value="true" />[m
+[32m+[m[32m        <entry key="FindUnreleasedLock" value="true" />[m
+[32m+[m[32m        <entry key="FindUnsatisfiedObligation" value="true" />[m
+[32m+[m[32m        <entry key="FindUnsyncGet" value="true" />[m
+[32m+[m[32m        <entry key="FindUseOfNonSerializableValue" value="true" />[m
+[32m+[m[32m        <entry key="FindUselessControlFlow" value="true" />[m
+[32m+[m[32m        <entry key="FormatStringChecker" value="true" />[m
+[32m+[m[32m        <entry key="FunctionsThatMightBeMistakenForProcedures" value="true" />[m
+[32m+[m[32m        <entry key="HugeSharedStringConstants" value="true" />[m
+[32m+[m[32m        <entry key="IDivResultCastToDouble" value="true" />[m
+[32m+[m[32m        <entry key="IncompatMask" value="true" />[m
+[32m+[m[32m        <entry key="InconsistentAnnotations" value="true" />[m
+[32m+[m[32m        <entry key="InefficientMemberAccess" value="false" />[m
+[32m+[m[32m        <entry key="InefficientToArray" value="true" />[m
+[32m+[m[32m        <entry key="InfiniteLoop" value="true" />[m
+[32m+[m[32m        <entry key="InfiniteRecursiveLoop" value="true" />[m
+[32m+[m[32m        <entry key="InheritanceUnsafeGetResource" value="true" />[m
+[32m+[m[32m        <entry key="InitializationChain" value="true" />[m
+[32m+[m[32m        <entry key="InitializeNonnullFieldsInConstructor" value="true" />[m
+[32m+[m[32m        <entry key="InstantiateStaticClass" value="true" />[m
+[32m+[m[32m        <entry key="IntCast2LongAsInstant" value="true" />[m
+[32m+[m[32m        <entry key="InvalidJUnitTest" value="true" />[m
+[32m+[m[32m        <entry key="IteratorIdioms" value="true" />[m
+[32m+[m[32m        <entry key="LazyInit" value="true" />[m
+[32m+[m[32m        <entry key="LoadOfKnownNullValue" value="true" />[m
+[32m+[m[32m        <entry key="LostLoggerDueToWeakReference" value="true" />[m
+[32m+[m[32m        <entry key="MethodReturnCheck" value="true" />[m
+[32m+[m[32m        <entry key="Methods" value="true" />[m
+[32m+[m[32m        <entry key="MultithreadedInstanceAccess" value="true" />[m
+[32m+[m[32m        <entry key="MutableLock" value="true" />[m
+[32m+[m[32m        <entry key="MutableStaticFields" value="true" />[m
+[32m+[m[32m        <entry key="Naming" value="true" />[m
+[32m+[m[32m        <entry key="Noise" value="false" />[m
+[32m+[m[32m        <entry key="NoiseNullDeref" value="false" />[m
+[32m+[m[32m        <entry key="NoteAnnotationRetention" value="true" />[m
+[32m+[m[32m        <entry key="NoteCheckReturnValueAnnotations" value="true" />[m
+[32m+[m[32m        <entry key="NoteDirectlyRelevantTypeQualifiers" value="true" />[m
+[32m+[m[32m        <entry key="NoteJCIPAnnotation" value="true" />[m
+[32m+[m[32m        <entry key="NoteNonNullAnnotations" value="false" />[m
+[32m+[m[32m        <entry key="NoteNonnullReturnValues" value="false" />[m
+[32m+[m[32m        <entry key="NoteSuppressedWarnings" value="true" />[m
+[32m+[m[32m        <entry key="NoteUnconditionalParamDerefs" value="true" />[m
+[32m+[m[32m        <entry key="NumberConstructor" value="true" />[m
+[32m+[m[32m        <entry key="OverridingEqualsNotSymmetrical" value="true" />[m
+[32m+[m[32m        <entry key="PreferZeroLengthArrays" value="true" />[m
+[32m+[m[32m        <entry key="PublicSemaphores" value="false" />[m
+[32m+[m[32m        <entry key="QuestionableBooleanAssignment" value="true" />[m
+[32m+[m[32m        <entry key="ReadOfInstanceFieldInMethodInvokedByConstructorInSuperclass" value="true" />[m
+[32m+[m[32m        <entry key="ReadReturnShouldBeChecked" value="true" />[m
+[32m+[m[32m        <entry key="RedundantInterfaces" value="true" />[m
+[32m+[m[32m        <entry key="ReflectiveClasses" value="true" />[m
+[32m+[m[32m        <entry key="RepeatedConditionals" value="true" />[m
+[32m+[m[32m        <entry key="ResolveAllReferences" value="false" />[m
+[32m+[m[32m        <entry key="RuntimeExceptionCapture" value="true" />[m
+[32m+[m[32m        <entry key="SerializableIdiom" value="true" />[m
+[32m+[m[32m        <entry key="StartInConstructor" value="true" />[m
+[32m+[m[32m        <entry key="StaticCalendarDetector" value="true" />[m
+[32m+[m[32m        <entry key="StringConcatenation" value="true" />[m
+[32m+[m[32m        <entry key="SuperfluousInstanceOf" value="true" />[m
+[32m+[m[32m        <entry key="SuspiciousThreadInterrupted" value="true" />[m
+[32m+[m[32m        <entry key="SwitchFallthrough" value="true" />[m
+[32m+[m[32m        <entry key="SynchronizationOnSharedBuiltinConstant" value="true" />[m
+[32m+[m[32m        <entry key="SynchronizeAndNullCheckField" value="true" />[m
+[32m+[m[32m        <entry key="SynchronizeOnClassLiteralNotGetClass" value="true" />[m
+[32m+[m[32m        <entry key="SynchronizingOnContentsOfFieldToProtectField" value="true" />[m
+[32m+[m[32m        <entry key="TestASM" value="false" />[m
+[32m+[m[32m        <entry key="TestDataflowAnalysis" value="false" />[m
+[32m+[m[32m        <entry key="TestingGround" value="false" />[m
+[32m+[m[32m        <entry key="TestingGround2" value="false" />[m
+[32m+[m[32m        <entry key="TrainFieldStoreTypes" value="true" />[m
+[32m+[m[32m        <entry key="TrainLongInstantfParams" value="true" />[m
+[32m+[m[32m        <entry key="TrainNonNullAnnotations" value="true" />[m
+[32m+[m[32m        <entry key="TrainUnconditionalDerefParams" value="true" />[m
+[32m+[m[32m        <entry key="URLProblems" value="true" />[m
+[32m+[m[32m        <entry key="UncallableMethodOfAnonymousClass" value="true" />[m
+[32m+[m[32m        <entry key="UnnecessaryMath" value="true" />[m
+[32m+[m[32m        <entry key="UnreadFields" value="true" />[m
+[32m+[m[32m        <entry key="UselessSubclassMethod" value="false" />[m
+[32m+[m[32m        <entry key="VarArgsProblems" value="true" />[m
+[32m+[m[32m        <entry key="VolatileUsage" value="true" />[m
+[32m+[m[32m        <entry key="WaitInLoop" value="true" />[m
+[32m+[m[32m        <entry key="WrongMapIterator" value="true" />[m
+[32m+[m[32m        <entry key="XMLFactoryBypass" value="true" />[m
+[32m+[m[32m      </map>[m
+[32m+[m[32m    </option>[m
+[32m+[m[32m    <option name="_reportCategories">[m
+[32m+[m[32m      <map>[m
+[32m+[m[32m        <entry key="BAD_PRACTICE" value="true" />[m
+[32m+[m[32m        <entry key="CORRECTNESS" value="true" />[m
+[32m+[m[32m        <entry key="EXPERIMENTAL" value="true" />[m
+[32m+[m[32m        <entry key="I18N" value="true" />[m
+[32m+[m[32m        <entry key="MALICIOUS_CODE" value="true" />[m
+[32m+[m[32m        <entry key="MT_CORRECTNESS" value="true" />[m
+[32m+[m[32m        <entry key="PERFORMANCE" value="true" />[m
+[32m+[m[32m        <entry key="SECURITY" value="true" />[m
+[32m+[m[32m        <entry key="STYLE" value="true" />[m
+[32m+[m[32m      </map>[m
+[32m+[m[32m    </option>[m
+[32m+[m[32m  </component>[m
+ </module>[m
+ [m
