@@ -34,7 +34,6 @@ import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 public class LineGraphView extends GraphView {
 	private final Paint paintBackground;
 	private boolean drawBackground;
-	private boolean drawDataPoints;
 	private float dataPointsRadius = 10f;
 
 	public LineGraphView(Context context, AttributeSet attrs) {
@@ -65,7 +64,6 @@ public class LineGraphView extends GraphView {
 		paint.setStrokeWidth(style.thickness);
 		paint.setColor(style.color);
 
-
 		Path bgPath = null;
 		if (drawBackground) {
 			bgPath = new Path();
@@ -90,7 +88,7 @@ public class LineGraphView extends GraphView {
 				float endY = (float) (border - y) + graphheight;
 
 				// draw data point
-				if (drawDataPoints) {
+				if (style.drawDataPoints) {
 					//fix: last value was not drawn. Draw here now the end values
 					canvas.drawCircle(endX, endY, dataPointsRadius, paint);
 				}
@@ -103,7 +101,7 @@ public class LineGraphView extends GraphView {
 					}
 					bgPath.lineTo(endX, endY);
 				}
-			} else if (drawDataPoints) {
+			} else if (style.drawDataPoints) {
 				//fix: last value not drawn as datapoint. Draw first point here, and then on every step the end values (above)
 				float first_X = (float) x + (horstart + 1);
 				float first_Y = (float) (border - y) + graphheight;
@@ -134,10 +132,6 @@ public class LineGraphView extends GraphView {
 		return drawBackground;
 	}
 
-	public boolean getDrawDataPoints() {
-		return drawDataPoints;
-	}
-
 	/**
 	 * sets the background color for the series.
 	 * This is not the background color of the whole graph.
@@ -150,7 +144,6 @@ public class LineGraphView extends GraphView {
 
 	/**
 	 * sets the radius of the circles at the data points.
-	 * @see #setDrawDataPoints(boolean)
 	 * @param dataPointsRadius
 	 */
 	public void setDataPointsRadius(float dataPointsRadius) {
@@ -163,15 +156,6 @@ public class LineGraphView extends GraphView {
 	 */
 	public void setDrawBackground(boolean drawBackground) {
 		this.drawBackground = drawBackground;
-	}
-
-	/**
-	 * You can set the flag to let the GraphView draw circles at the data points
-	 * @see #setDataPointsRadius(float)
-	 * @param drawDataPoints
-	 */
-	public void setDrawDataPoints(boolean drawDataPoints) {
-		this.drawDataPoints = drawDataPoints;
 	}
 
 }
