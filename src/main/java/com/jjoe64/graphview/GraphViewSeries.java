@@ -32,6 +32,7 @@ public class GraphViewSeries {
 	 */
 	static public class GraphViewSeriesStyle {
 		public int color = 0xff0077cc;
+        public int dataPointColor = color;
 		public int thickness = 3;
         public boolean drawDataPoints = false;
 		private ValueDependentColor valueDependentColor;
