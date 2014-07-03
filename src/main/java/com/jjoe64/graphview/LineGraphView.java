@@ -62,7 +62,6 @@ public class LineGraphView extends GraphView {
 
 		// draw data
 		paint.setStrokeWidth(style.thickness);
-		paint.setColor(style.color);
 
 		Path bgPath = null;
 		if (drawBackground) {
@@ -89,10 +88,13 @@ public class LineGraphView extends GraphView {
 
 				// draw data point
 				if (style.drawDataPoints) {
+                    paint.setColor(style.dataPointColor);
+
 					//fix: last value was not drawn. Draw here now the end values
 					canvas.drawCircle(endX, endY, dataPointsRadius, paint);
 				}
 
+                paint.setColor(style.color);
 				canvas.drawLine(startX, startY, endX, endY, paint);
 				if (bgPath != null) {
 					if (i==1) {
@@ -105,6 +107,7 @@ public class LineGraphView extends GraphView {
 				//fix: last value not drawn as datapoint. Draw first point here, and then on every step the end values (above)
 				float first_X = (float) x + (horstart + 1);
 				float first_Y = (float) (border - y) + graphheight;
+                paint.setColor(style.dataPointColor);
 				canvas.drawCircle(first_X, first_Y, dataPointsRadius, paint);
 			}
 			lastEndY = y;
