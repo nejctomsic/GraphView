@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 
@@ -34,7 +35,10 @@ import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 public class LineGraphView extends GraphView {
 	private final Paint paintBackground;
 	private boolean drawBackground;
-	private float dataPointsRadius = 10f;
+    private float extraMarginsSize = 50;
+    private float outerCircleSize = 9;
+    private float mainCircleSize = 7;
+    private float innerCircleSize = 3;
 
 	public LineGraphView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -52,6 +56,13 @@ public class LineGraphView extends GraphView {
 		paintBackground.setColor(Color.rgb(20, 40, 60));
 		paintBackground.setStrokeWidth(4);
 		paintBackground.setAlpha(128);
+
+        final DisplayMetrics metrics = getResources().getDisplayMetrics();
+        final float scaleFactor = metrics.densityDpi/160;
+        extraMarginsSize *= scaleFactor;
+        outerCircleSize *= scaleFactor;
+        mainCircleSize *= scaleFactor;
+        innerCircleSize *= scaleFactor;
 	}
 
 	@Override
@@ -88,10 +99,8 @@ public class LineGraphView extends GraphView {
 
 				// draw data point
 				if (style.drawDataPoints) {
-                    paint.setColor(style.dataPointColor);
-
 					//fix: last value was not drawn. Draw here now the end values
-					canvas.drawCircle(endX, endY, dataPointsRadius, paint);
+                    drawDataPoint(endX, endY, canvas, paint, style.dataPointColor);
 				}
 
                 paint.setColor(style.color);
@@ -108,7 +117,7 @@ public class LineGraphView extends GraphView {
 				float first_X = (float) x + (horstart + 1);
 				float first_Y = (float) (border - y) + graphheight;
                 paint.setColor(style.dataPointColor);
-				canvas.drawCircle(first_X, first_Y, dataPointsRadius, paint);
+                drawDataPoint(firstX, first_Y, canvas, paint, style.dataPointColor);
 			}
 			lastEndY = y;
 			lastEndX = x;
@@ -123,12 +132,17 @@ public class LineGraphView extends GraphView {
 		}
 	}
 
+    private void drawDataPoint(float startX, float startY, Canvas canvas, Paint paint, int datapointColor) {
+        paint.setColor(Color.WHITE);
+        canvas.drawCircle(startX, startY, outerCircleSize, paint);
+        paint.setColor(datapointColor);
+        canvas.drawCircle(startX, startY, mainCircleSize, paint);
+        paint.setColor(Color.WHITE);
+        canvas.drawCircle(startX, startY, innerCircleSize, paint);
+    }
+
 	public int getBackgroundColor() {
 		return paintBackground.getColor();
-	}
-
-	public float getDataPointsRadius() {
-		return dataPointsRadius;
 	}
 
 	public boolean getDrawBackground() {
@@ -143,14 +157,6 @@ public class LineGraphView extends GraphView {
 	@Override
 	public void setBackgroundColor(int color) {
 		paintBackground.setColor(color);
-	}
-
-	/**
-	 * sets the radius of the circles at the data points.
-	 * @param dataPointsRadius
-	 */
-	public void setDataPointsRadius(float dataPointsRadius) {
-		this.dataPointsRadius = dataPointsRadius;
 	}
 
 	/**
