@@ -70,6 +70,7 @@ public class LineGraphView extends GraphView {
         // draw background
         double lastEndY = 0;
         double lastEndX = 0;
+        graphwidth -= extraMarginsSize;
 
         // draw data
         paint.setStrokeWidth(style.thickness);
@@ -89,7 +90,7 @@ public class LineGraphView extends GraphView {
 
             double valX = values[i].getX() - minX;
             double ratX = valX / diffX;
-            double x = graphwidth * ratX;
+            double x = graphwidth * ratX + (extraMarginsSize/2);
 
             if (i > 0) {
                 float startX = (float) lastEndX + (horstart + 1);
