@@ -67,69 +67,107 @@ public class LineGraphView extends GraphView {
 
 	@Override
 	public void drawSeries(Canvas canvas, GraphViewDataInterface[] values, float graphwidth, float graphheight, float border, double minX, double minY, double diffX, double diffY, float horstart, GraphViewSeriesStyle style) {
-		// draw background
-		double lastEndY = 0;
-		double lastEndX = 0;
+        double lastEndY = 0.0D;
+        double lastEndX = 0.0D;
+        if (this.drawBackground)
+        {
+            float startY = graphheight + border;
+            for (int i = 0; i < values.length; i++)
+            {
+                double valY = values[i].getY() - minY;
+                double ratY = valY / diffY;
+                double y = graphheight * ratY;
 
-		// draw data
-		paint.setStrokeWidth(style.thickness);
+                double valX = values[i].getX() - minX;
+                double ratX = valX / diffX;
+                double x = graphwidth * ratX;
 
-		Path bgPath = null;
-		if (drawBackground) {
-			bgPath = new Path();
-		}
+                float endX = (float)x + (horstart + 1.0F);
+                float endY = (float)(border - y) + graphheight + 2.0F;
+                if (i > 0)
+                {
+                    double numSpace = (endX - lastEndX) / 3.0D + 1.0D;
+                    for (int xi = 0; xi < numSpace; xi++)
+                    {
+                        float spaceX = (float)(lastEndX + (endX - lastEndX) * xi / (numSpace - 1.0D));
+                        float spaceY = (float)(lastEndY + (endY - lastEndY) * xi / (numSpace - 1.0D));
 
-		lastEndY = 0;
-		lastEndX = 0;
-		float firstX = 0;
-		for (int i = 0; i < values.length; i++) {
-			double valY = values[i].getY() - minY;
-			double ratY = valY / diffY;
-			double y = graphheight * ratY;
 
-			double valX = values[i].getX() - minX;
-			double ratX = valX / diffX;
-			double x = graphwidth * ratX;
+                        float startX = spaceX;
+                        if (startX - horstart > 1.0F) {
+                            canvas.drawLine(startX, startY, spaceX, spaceY, this.paintBackground);
+                        }
+                    }
+                }
+                lastEndY = endY;
+                lastEndX = endX;
+            }
+        }
+        this.paint.setStrokeWidth(style.thickness);
+        this.paint.setColor(style.color);
 
-			if (i > 0) {
-				float startX = (float) lastEndX + (horstart + 1);
-				float startY = (float) (border - lastEndY) + graphheight;
-				float endX = (float) x + (horstart + 1);
-				float endY = (float) (border - y) + graphheight;
+        lastEndY = 0.0D;
+        lastEndX = 0.0D;
+        for (int i = 0; i < values.length; i++)
+        {
+            if (values.length == 1)
+            {
+                double valY = values[i].getY() - minY;
+                double ratY = valY / diffY;
+                double y = graphheight * ratY;
 
-				// draw data point
-				if (style.drawDataPoints) {
-					//fix: last value was not drawn. Draw here now the end values
-                    drawDataPoint(endX, endY, canvas, paint, style.dataPointColor);
-				}
+                double x = graphwidth / 2.0F + this.extraMarginsSize / 2.0F;
+                float startX = (float)x + (horstart + 1.0F);
+                float startY = (float)(border - y) + graphheight;
 
-                paint.setColor(style.color);
-				canvas.drawLine(startX, startY, endX, endY, paint);
-				if (bgPath != null) {
-					if (i==1) {
-						firstX = startX;
-						bgPath.moveTo(startX, startY);
-					}
-					bgPath.lineTo(endX, endY);
-				}
-			} else if (style.drawDataPoints) {
-				//fix: last value not drawn as datapoint. Draw first point here, and then on every step the end values (above)
-				float first_X = (float) x + (horstart + 1);
-				float first_Y = (float) (border - y) + graphheight;
-                paint.setColor(style.dataPointColor);
-                drawDataPoint(firstX, first_Y, canvas, paint, style.dataPointColor);
-			}
-			lastEndY = y;
-			lastEndX = x;
-		}
+                this.paint.setStyle(Paint.Style.FILL);
+                this.paint.setColor(-1);
+                canvas.drawCircle(startX, startY, this.outerCircleSize, this.paint);
+                this.paint.setColor(Color.parseColor("#4fdfbe"));
+                canvas.drawCircle(startX, startY, this.mainCircleSize, this.paint);
+                this.paint.setColor(-1);
+                canvas.drawCircle(startX, startY, this.innerCircleSize, this.paint);
+            }
+            double valY = values[i].getY() - minY;
+            double ratY = valY / diffY;
+            double y = graphheight * ratY;
 
-		if (bgPath != null) {
-			// end / close path
-			bgPath.lineTo((float) lastEndX, graphheight + border);
-			bgPath.lineTo(firstX, graphheight + border);
-			bgPath.close();
-			canvas.drawPath(bgPath, paintBackground);
-		}
+            double valX = values[i].getX() - minX;
+            double ratX = valX / diffX;
+            double x = graphwidth * ratX + this.extraMarginsSize / 2.0F;
+            if (i > 0)
+            {
+                this.paint.setStyle(Paint.Style.STROKE);
+                this.paint.setColor(Color.parseColor("#4fdfbe"));
+
+                float startX = (float)lastEndX + (horstart + 1.0F);
+                float startY = (float)(border - lastEndY) + graphheight;
+                float endX = (float)x + (horstart + 1.0F);
+                float endY = (float)(border - y) + graphheight;
+
+                canvas.drawLine(startX, startY, endX, endY, this.paint);
+
+                this.paint.setStyle(Paint.Style.FILL);
+                this.paint.setColor(-1);
+                canvas.drawCircle(startX, startY, this.outerCircleSize, this.paint);
+                this.paint.setColor(Color.parseColor("#4fdfbe"));
+                canvas.drawCircle(startX, startY, this.mainCircleSize, this.paint);
+                this.paint.setColor(-1);
+                canvas.drawCircle(startX, startY, this.innerCircleSize, this.paint);
+                if (i == values.length - 1)
+                {
+                    this.paint.setStyle(Paint.Style.FILL);
+                    this.paint.setColor(-1);
+                    canvas.drawCircle(endX, endY, this.outerCircleSize, this.paint);
+                    this.paint.setColor(Color.parseColor("#4fdfbe"));
+                    canvas.drawCircle(endX, endY, this.mainCircleSize, this.paint);
+                    this.paint.setColor(-1);
+                    canvas.drawCircle(endX, endY, this.innerCircleSize, this.paint);
+                }
+            }
+            lastEndY = y;
+            lastEndX = x;
+        }
 	}
 
     private void drawDataPoint(float startX, float startY, Canvas canvas, Paint paint, int datapointColor) {

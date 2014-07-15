@@ -26,11 +26,13 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,6 +61,10 @@ abstract public class GraphView extends LinearLayout {
 	private class GraphViewContentView extends View {
 		private float lastTouchEventX;
 		private float graphwidth;
+        protected float extraMarginsSize = 50;
+        private Paint textPaint;
+        private float textSize = 12.0F;
+        private float gridStrokeWidth = 1.0F;
 		private boolean scrollingStarted;
 
 		/**
@@ -67,6 +73,12 @@ abstract public class GraphView extends LinearLayout {
 		public GraphViewContentView(Context context) {
 			super(context);
 			setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+
+            final DisplayMetrics metrics = getResources().getDisplayMetrics();
+            final float scaleFactor = metrics.densityDpi/160;
+            extraMarginsSize *= scaleFactor;
+            gridStrokeWidth *= scaleFactor;
+            textSize *= scaleFactor;
 		}
 
 		/**
@@ -74,80 +86,87 @@ abstract public class GraphView extends LinearLayout {
 		 */
 		@Override
 		protected void onDraw(Canvas canvas) {
+            textPaint = new Paint();
+            textPaint.setAntiAlias(true);
+            textPaint.setTextSize(this.textSize);
 
-			paint.setAntiAlias(true);
+            paint.setAntiAlias(true);
+            paint.setStrokeWidth(gridStrokeWidth);
 
-			// normal
-			paint.setStrokeWidth(0);
+            float border = 20.0F;
+            float horstart = 0.0F;
+            float height = getHeight();
+            float width = getWidth() - 1;
+            double maxY = getMaxY();
+            double minY = getMinY();
+            double maxX = getMaxX(false);
+            double minX = getMinX(false);
+            double diffX = maxX - minX;
+            float graphheight = height - 3.0F * border;
+            this.graphwidth = (width - extraMarginsSize);
+            if (horlabels == null) {
+                horlabels = generateHorlabels(this.graphwidth);
+            }
+            if (verlabels == null) {
+                verlabels = generateVerlabels(graphheight);
+            }
+            DashPathEffect dottedLinesEffect = new DashPathEffect(new float[] { gridStrokeWidth, gridStrokeWidth * 3.0F }, 0.0F);
 
-			float border = GraphViewConfig.BORDER;
-			float horstart = 0;
-			float height = getHeight();
-			float width = getWidth() - 1;
-			double maxY = getMaxY();
-			double minY = getMinY();
-			double maxX = getMaxX(false);
-			double minX = getMinX(false);
-			double diffX = maxX - minX;
 
-			 // measure bottom text
-			if (labelTextHeight == null || horLabelTextWidth == null) {
-				paint.setTextSize(getGraphViewStyle().getTextSize());
-				double testX = ((getMaxX(true)-getMinX(true))*0.783)+getMinX(true);
-				String testLabel = formatLabel(testX, true);
-				paint.getTextBounds(testLabel, 0, testLabel.length(), textBounds);
-				labelTextHeight = (textBounds.height());
-				horLabelTextWidth = (textBounds.width());
-			}
-            border += labelTextHeight;
+            paint.setStrokeWidth(gridStrokeWidth);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeCap(Paint.Cap.BUTT);
+            paint.setColor(Color.LTGRAY);
+            textPaint.setStrokeWidth(0.0F);
+            textPaint.setColor(Color.parseColor("#3d3d3d"));
 
-			float graphheight = height - (2 * border);
-			graphwidth = width;
+            paint.setTextAlign(Paint.Align.LEFT);
+            int vers = verlabels.length - 1;
+            for (int i = 0; i < verlabels.length; i++)
+            {
+                if (i == verlabels.length - 1) {
+                    paint.setPathEffect(null);
+                } else {
+                    paint.setPathEffect(dottedLinesEffect);
+                }
+                float y = graphheight / vers * i + border;
+                canvas.drawLine(horstart, y, width, y, paint);
+            }
+            int hors = horlabels.length - 1;
+            for (int i = 0; i < horlabels.length; i++)
+            {
+                paint.setPathEffect(dottedLinesEffect);
 
-			if (horlabels == null) {
-				horlabels = generateHorlabels(graphwidth);
-			}
-			if (verlabels == null) {
-				verlabels = generateVerlabels(graphheight);
-			}
+                float x;
+                if (horlabels.length == 1) {
+                    x = this.graphwidth / 2.0F + horstart + this.extraMarginsSize / 2.0F;
+                } else {
+                    x = this.graphwidth / hors * i + horstart + this.extraMarginsSize / 2.0F;
+                }
+                canvas.drawLine(x, height - 2.0F * border, x, 0.0F, paint);
 
-			// vertical lines
-			if(graphViewStyle.getGridStyle() != GridStyle.HORIZONTAL) {
-				paint.setTextAlign(Align.LEFT);
-				int vers = verlabels.length - 1;
-				for (int i = 0; i < verlabels.length; i++) {
-					paint.setColor(graphViewStyle.getGridColor());
-					float y = ((graphheight / vers) * i) + border;
-					canvas.drawLine(horstart, y, width, y, paint);
-				}
-			}
-
-			drawHorizontalLabels(canvas, border, horstart, height, horlabels, graphwidth);
-
-            paint.setColor(graphViewStyle.getHorizontalLabelsColor());
-			paint.setTextAlign(Align.CENTER);
-			canvas.drawText(title, (graphwidth / 2) + horstart, border - 4, paint);
-
-			if (maxY == minY) {
-				// if min/max is the same, fake it so that we can render a line
-				if(maxY == 0) {
-					// if both are zero, change the values to prevent division by zero
-					maxY = 1.0d;
-					minY = 0.0d;
-				} else {
-					maxY = maxY*1.05d;
-					minY = minY*0.95d;
-				}
-			}
-
-			double diffY = maxY - minY;
-			paint.setStrokeCap(Paint.Cap.ROUND);
-
-			for (int i=0; i<graphSeries.size(); i++) {
-				drawSeries(canvas, _values(i), graphwidth, graphheight, border, minX, minY, diffX, diffY, horstart, graphSeries.get(i).style);
-			}
-
-			if (showLegend) drawLegend(canvas, height, width);
+                paint.setPathEffect(null);
+                if (horlabels.length == 1) {
+                    x = this.graphwidth / 2.0F + horstart + this.extraMarginsSize / 2.0F;
+                }
+                textPaint.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText(horlabels[i], x, height, textPaint);
+            }
+            paint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(title, this.graphwidth / 2.0F + horstart, border - 4.0F, paint);
+            if (maxY == minY)
+            {
+                maxY *= 1.05D;
+                minY *= 0.95D;
+            }
+            double diffY = maxY - minY;
+            paint.setStrokeCap(Paint.Cap.ROUND);
+            for (int i = 0; i < graphSeries.size(); i++) {
+                drawSeries(canvas, _values(i), this.graphwidth, graphheight, border, minX, minY, diffX, diffY, horstart, ((GraphViewSeries)graphSeries.get(i)).style);
+            }
+            if (showLegend) {
+                drawLegend(canvas, height, width);
+            }
 		}
 
 		private void onMoveGesture(float f) {
@@ -699,10 +718,10 @@ abstract public class GraphView extends LinearLayout {
 		}
 		return smallest;
 	}
-	
+
 	/**
 	 * returns the size of the Viewport
-	 * 
+	 *
 	 */
 	public double getViewportSize(){
 		return viewportSize;
