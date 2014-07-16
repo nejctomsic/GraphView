@@ -116,7 +116,7 @@ public class LineGraphView extends GraphView {
                 //fix: last value not drawn as datapoint. Draw first point here, and then on every step the end values (above)
                 float first_X;
                 if (values.length == 1) {
-                    first_X = graphwidth / 2 + horstart;
+                    first_X = graphwidth / 2 + horstart + (extraMarginsSize/2);
                 } else {
                     first_X = (float) x + (horstart + 1);
                 }

@@ -428,7 +428,7 @@ abstract public class GraphView extends LinearLayout {
             paint.setColor(graphViewStyle.getGridColor());
             float x = 0;
             if (horlabels.length == 1) {
-                x = graphwidth / 2.0F + horstart;
+                x = graphwidth / 2.0F + horstart + (extraMarginsSize/2);
             } else {
                 x = ((graphwidth / hors) * i) + horstart + (extraMarginsSize/2);
             }
@@ -437,10 +437,6 @@ abstract public class GraphView extends LinearLayout {
             }
             if(showHorizontalLabels) {
                 paint.setTextAlign(Align.CENTER);
-                if (i==horlabels.length-1)
-                    paint.setTextAlign(Align.RIGHT);
-                if (i==0)
-                    paint.setTextAlign(Align.LEFT);
                 paint.setColor(graphViewStyle.getHorizontalLabelsColor());
                 canvas.drawText(horlabels[i], x, height - 4, paint);
             }
