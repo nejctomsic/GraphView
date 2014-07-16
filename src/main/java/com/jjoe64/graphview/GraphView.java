@@ -532,7 +532,11 @@ abstract public class GraphView extends LinearLayout {
         double min = getMinX(false);
         double max = getMaxX(false);
         for (int i=0; i<=numLabels; i++) {
-            labels[i] = formatLabel(min + ((max-min)*i/numLabels), true);
+            if (min == max) {
+                labels[i] = formatLabel(min, true);
+            } else {
+                labels[i] = formatLabel(min + ((max-min)*i/numLabels), true);
+            }
         }
         return labels;
     }
