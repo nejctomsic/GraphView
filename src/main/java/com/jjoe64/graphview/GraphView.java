@@ -956,6 +956,24 @@ abstract public class GraphView extends LinearLayout {
      */
     public void setScrollable(boolean scrollable) {
         this.scrollable = scrollable;
+        if (scrollable) {
+            // In order to use horizontal scrolling inside ViewPager we must not allow
+            // the ViewPager to intercept touch events
+            graphViewContentView.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+        } else {
+            graphViewContentView.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return false;
+                }
+            });
+        }
     }
 
     public void setShowLegend(boolean showLegend) {
